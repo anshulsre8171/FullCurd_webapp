@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { StudentLayout } from './StudentLayout'
 import Swal from 'sweetalert2'
+import { useSelector } from 'react-redux'
 
 export const View = () => {
     const nav = useNavigate()
@@ -11,8 +12,11 @@ export const View = () => {
 
     const get = async () => {
         //  window.localStorage.setItem("usertoken", JSON.stringify(response.data.token))
-     
-         let token= JSON.parse(window.localStorage.getItem("usertoken"));
+
+        // let token= JSON.parse(window.localStorage.getItem("usertoken"));
+
+        const token=useSelector((state)=>state.counter.value)
+
          if(token==null || token==undefined || token==""){
             nav("/login")
 

@@ -5,6 +5,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import Typewriter from 'typewriter-effect';
+
+import {useDispatch} from 'react-redux'
+import { token } from '../Redux/Slice';
+
 const schema = yup
     .object()
     .shape({
@@ -19,6 +23,7 @@ const Login = () => {
     });
 
     const Navigate = useNavigate()
+    const dispatch=useDispatch()
 
     const userLogin = async (d) => {
         const url="http://localhost:1140/login"
@@ -27,8 +32,12 @@ const Login = () => {
 
         if (response?.data.success == true && response?.data.code == 201) {
             const obj = [response.data.token]
-            console.log(obj);
-            window.localStorage.setItem("usertoken", JSON.stringify(response.data.token))
+            
+            // console.log(obj);
+            // window.localStorage.setItem("usertoken", JSON.stringify(response.data.token))
+
+            dispatch(token(obj))
+
             Swal.fire({
                 icon: "success",
                 title: "Login",
